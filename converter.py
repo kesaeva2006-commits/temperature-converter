@@ -13,3 +13,6 @@ def celsius_to_kelvin(c):
 def kelvin_to_celsius(k):
     """Перевод из Кельвина в Цельсий"""
     return round(k - 273.15, 2)
+    
+# Версия модуля
+VERSION = "1.0"
