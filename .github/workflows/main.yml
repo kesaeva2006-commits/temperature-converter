@@ -1,0 +1,37 @@
+name: Continuous Integration  # название workflow
+
+on:  # условия запуска
+  push:
+    branches: [ "main", "develop", "release" ]  # запускать при пуше в эти ветки
+  pull_request:
+    branches: [ "main", "develop" ]  # и при создании PR в эти ветки
+
+jobs:
+  test:  # название задачи
+    runs-on: ubuntu-latest  # запускать на виртуальной машине с Ubuntu
+
+    steps:
+    - uses: actions/checkout@v4  # клонировать репозиторий на виртуальную машину
+
+    - name: Set up Python  # шаг установки Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'  # версия Python
+
+    - name: Install dependencies  # шаг установки зависимостей
+      run: |
+        pip install pytest pdoc3  # pytest - для тестов, pdoc3 - для документации
+
+    - name: Run tests  # шаг запуска тестов
+      run: |
+        python -m pytest tests/  # запускаем все тесты из папки tests/
+
+    - name: Generate documentation  # шаг генерации документации
+      run: |
+        pdoc3 --html --output-dir docs converter.py  # генерируем HTML-документацию из converter.py
+
+    - name: Upload documentation  # шаг сохранения документации
+      uses: actions/upload-artifact@v4
+      with:
+        name: documentation  # название артефакта
+        path: docs/  # папка с документацией
