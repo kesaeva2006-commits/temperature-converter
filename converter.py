@@ -13,3 +13,14 @@ def celsius_to_kelvin(c):
 def kelvin_to_celsius(k):
     """Перевод из Кельвина в Цельсий"""
     return round(k - 273.15, 2)
+
+def celsius_to_celsius(c):
+    """Возвращает температуру в Цельсии без изменений"""
+    # Возвращаем то же значение — для проверки корректности входных данных
+    return round(c, 2)
+
+def fahrenheit_to_kelvin(f):
+    """Перевод из Фаренгейта в Кельвин"""
+    # Сначала переводим в Цельсий, потом в Кельвин
+    celsius = fahrenheit_to_celsius(f)
+    return celsius_to_kelvin(celsius)
